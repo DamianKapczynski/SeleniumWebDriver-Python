@@ -1,15 +1,9 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
 
 class TestPositiveScenarios:
-    def test_positive_login(self):
-
-        # Open browser
-        driver = webdriver.Chrome()
-        time.sleep(1)
-
+    def test_positive_login(self, driver):
         # Open page
         driver.get("https://practicetestautomation.com/practice-test-login/")
         time.sleep(2)
