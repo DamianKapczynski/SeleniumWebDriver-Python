@@ -4,11 +4,17 @@ import time
 import pytest
 
 
+@pytest.fixture()
+def driver():
+    print("Creating chrome driver")
+    my_driver = webdriver.Chrome()
+    yield my_driver
+    print("Closing chrome driver")
+    my_driver.quit()
+
 class TestNegativeScenarios:
 
-    def test_negative_username(self):
-        driver = webdriver.Chrome()
-
+    def test_negative_username(self, driver):
         # Open page
         driver.get("https://practicetestautomation.com/practice-test-login/")
 
@@ -34,9 +40,7 @@ class TestNegativeScenarios:
         assert error_message == "Your username is invalid!", "Error message is not expected"
 
 
-    def test_negative_password(self):
-        driver = webdriver.Chrome()
-
+    def test_negative_password(self, driver):
         # Open page
         driver.get("https://practicetestautomation.com/practice-test-login/")
 
