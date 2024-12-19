@@ -1,7 +1,7 @@
-import time
-
 import pytest
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 
 
 class TestNegativeScenarios:
@@ -22,12 +22,11 @@ class TestNegativeScenarios:
         password_locator.send_keys(password)
 
         #Push Submit button
-        submit_button_locator = driver.find_element(By.XPATH, "//button[@class='btn']")
-        submit_button_locator.click()
-        time.sleep(2)
+        driver.find_element(By.XPATH, "//button[@class='btn']").click()
 
         #Verify error message is displayed
-        error_message_locator = driver.find_element(By.ID, "error")
+        wait = WebDriverWait(driver, 10)
+        error_message_locator = wait.until(ec.visibility_of_element_located((By.ID, "error")))
         assert error_message_locator.is_displayed(), "Error message is not displayed, but it should be"
 
         #Verify error message text is Your password is invalid!

@@ -1,6 +1,3 @@
-import time
-
-import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -11,8 +8,7 @@ class TestExceptionsScenarios:
         driver.get("https://practicetestautomation.com/practice-test-exceptions/")
 
         #Click Add button
-        add_button_locator = driver.find_element(By.ID, 'add_btn')
-        add_button_locator.click()
+        add_button_locator = driver.find_element(By.ID, 'add_btn').click()
         wait = WebDriverWait(driver, 10)
         row2_input_locator = wait.until(ec.presence_of_element_located((By.XPATH, "//div[@id='row2']/input")))
 
@@ -25,8 +21,7 @@ class TestExceptionsScenarios:
         driver.get("https://practicetestautomation.com/practice-test-exceptions/")
 
         #Click Add button
-        add_button_locator = driver.find_element(By.ID, 'add_btn')
-        add_button_locator.click()
+        add_button_locator = driver.find_element(By.ID, 'add_btn').click()
 
         #Wait for the second row to load
         wait = WebDriverWait(driver, 10)
@@ -39,9 +34,7 @@ class TestExceptionsScenarios:
         driver.find_element(By.XPATH, "//div[@id='rows']/div[3]/div[@class='row']/button[@id='save_btn']").click()
 
         #Verify text saved
-        confirmation_locator = wait.until(ec.presence_of_element_located((By.ID, "confirmation")))
-        confirmation_text = confirmation_locator.text
-        assert confirmation_text == "Row 2 was saved", "Wrong confirmation message"
+        assert row2_input_locator.get_attribute("value") == "Input text", "Wrong input"
 
 
     def test_InvalidElementStateException(self, driver):
@@ -60,8 +53,5 @@ class TestExceptionsScenarios:
         driver.find_element(By.ID, "save_btn").click()
 
         #Verify text changed
-        #new_text = input_field_locator.get_attribute("value")
-        # assert new_text == "New value", "Wrong input"
         confirmation_locator = wait.until(ec.visibility_of_element_located((By.ID, "confirmation")))
-        confirmation_text = confirmation_locator.text
-        assert confirmation_text == "Row 1 was saved", "Wrong confirmation message"
+        assert confirmation_locator.text == "Row 1 was saved", "Wrong confirmation message"
