@@ -42,3 +42,26 @@ class TestExceptionsScenarios:
         confirmation_locator = wait.until(ec.presence_of_element_located((By.ID, "confirmation")))
         confirmation_text = confirmation_locator.text
         assert confirmation_text == "Row 2 was saved", "Wrong confirmation message"
+
+
+    def test_InvalidElementStateException(self, driver):
+        #Open page
+        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
+
+        #Clear input field
+        driver.find_element(By.ID, 'edit_btn').click()
+        input_field_locator = driver.find_element(By.XPATH, "//div[@id='row1']/input")
+        wait = WebDriverWait(driver, 10)
+        wait.until(ec.element_to_be_clickable(input_field_locator))
+        input_field_locator.clear()
+
+        #Type text into the input field
+        input_field_locator.send_keys("New value")
+        driver.find_element(By.ID, "save_btn").click()
+
+        #Verify text changed
+        #new_text = input_field_locator.get_attribute("value")
+        # assert new_text == "New value", "Wrong input"
+        confirmation_locator = wait.until(ec.visibility_of_element_located((By.ID, "confirmation")))
+        confirmation_text = confirmation_locator.text
+        assert confirmation_text == "Row 1 was saved", "Wrong confirmation message"
