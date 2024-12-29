@@ -55,3 +55,18 @@ class TestExceptionsScenarios:
         #Verify text changed
         confirmation_locator = wait.until(ec.visibility_of_element_located((By.ID, "confirmation")))
         assert confirmation_locator.text == "Row 1 was saved", "Wrong confirmation message"
+
+    def test_StaleElementReferenceException(self, driver):
+        #Open page
+        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
+
+        #Find the instructions text element
+        instruction_text_locator = driver.find_element(By.ID, 'instructions')
+
+        #Push add button
+        driver.find_element(By.ID, 'add_btn').click()
+
+        #Verify instruction text element is no longer displayed
+        wait = WebDriverWait(driver, 10)
+        assert wait.until(ec.invisibility_of_element_located((By.ID, 'instructions'))), "Instrucion text element is displayed but it shouldn't"
+
