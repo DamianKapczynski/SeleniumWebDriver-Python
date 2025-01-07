@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import NoSuchElementException
 
 class BasePage:
-    def __int__(self, driver: WebDriver):
+    def __init__(self, driver: WebDriver):
         self._driver = driver
 
     def _find(self, locator: tuple) -> WebElement:
@@ -32,3 +32,10 @@ class BasePage:
             return self._find(locator).is_displayed()
         except NoSuchElementException:
             return False
+
+    def open_url(self, url: str):
+        self._driver.get(url)
+
+    def _get_text(self, locator: tuple, time: int = 10) -> str:
+        self._wait_untill_element_is_visible(locator, time)
+        return self._find(locator).text
