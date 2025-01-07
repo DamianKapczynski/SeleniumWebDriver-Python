@@ -10,9 +10,6 @@ class LoggedInSuccessfullyPage:
     def __int__(self, driver: WebDriver):
         self._driver = driver
 
-    @property
-    def get_current_url(self) -> str:
-        return self._driver.current_url
 
     @property
     def get_expected_url(self) -> str:
