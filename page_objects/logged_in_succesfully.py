@@ -12,11 +12,11 @@ class LoggedInSuccessfullyPage(BasePage):
         super().__init__(driver)
 
     @property
-    def get_expected_url(self) -> str:
+    def expected_url(self) -> str:
         return self._url
 
     @property
-    def get_header(self) -> str:
+    def header(self) -> str:
         return super()._get_text(self.__header_locator)
 
     def is_logout_button_displayed(self) -> bool:
