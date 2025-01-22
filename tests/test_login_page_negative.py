@@ -1,7 +1,11 @@
+import time
+
 import pytest
+from page_objects.login_page import LoginPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from tests.conftest import driver
 
 
 class TestNegativeScenarios:
@@ -10,25 +14,7 @@ class TestNegativeScenarios:
                              [("IncorrectUser", "Password123", "Your username is invalid!"),
                               ("student", "incorrectPassword", "Your password is invalid!")])
     def test_negative_login(self, driver, username, password, expected_error_message):
-        # Open page
-        driver.get("https://practicetestautomation.com/practice-test-login/")
-
-        #Type username student into Username field
-        username_locator = driver.find_element(By.ID, "username")
-        username_locator.send_keys(username)
-
-        #Type password incorrectPassword into Password field
-        password_locator = driver.find_element(By.NAME, "password")
-        password_locator.send_keys(password)
-
-        #Push Submit button
-        driver.find_element(By.XPATH, "//button[@class='btn']").click()
-
-        #Verify error message is displayed
-        wait = WebDriverWait(driver, 10)
-        error_message_locator = wait.until(ec.visibility_of_element_located((By.ID, "error")))
-        assert error_message_locator.is_displayed(), "Error message is not displayed, but it should be"
-
-        #Verify error message text is Your password is invalid!
-        error_message = error_message_locator.text
-        assert error_message == expected_error_message, "Error message is not expected"
+        login_page = LoginPage(driver)
+        login_page.open()
+        login_page.execute_login(username, password)
+        assert login_page.get_error_message() == expected_error_message, "Error message is not expected"

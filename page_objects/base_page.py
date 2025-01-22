@@ -19,9 +19,9 @@ class BasePage:
         self._wait_untill_element_is_visible(locator, time)
         self._find(locator).click()
 
-    def _wait_untill_element_is_visible(self, locator: tuple, time: int = 10):
+    def _wait_untill_element_is_visible(self, locator, time: int = 10):
         wait = WebDriverWait(self._driver, time)
-        row2_input_locator = wait.until(ec.presence_of_element_located(locator))
+        wait.until(ec.presence_of_element_located(locator))
 
     @property
     def current_url(self) -> str:
