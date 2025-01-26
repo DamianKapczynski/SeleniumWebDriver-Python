@@ -28,6 +28,7 @@ class BasePage:
         return self._driver.current_url
 
     def _is_displayed(self, locator: tuple) -> bool:
+        self._wait_untill_element_is_visible(locator)
         try:
             return self._find(locator).is_displayed()
         except NoSuchElementException:

@@ -2,18 +2,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
+from page_objects.exceptions_page import ExceptionsPage
+
 class TestExceptionsScenarios:
     def test_NoSuchElementException(self, driver):
-        #Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
-
-        #Click Add button
-        add_button_locator = driver.find_element(By.ID, 'add_btn').click()
-        wait = WebDriverWait(driver, 10)
-        row2_input_locator = wait.until(ec.presence_of_element_located((By.XPATH, "//div[@id='row2']/input")))
-
-        #Verify Row 2 input field is displayed
-        assert row2_input_locator.is_displayed(), "Row2 is not displayed but it should be"
+        exception_page = ExceptionsPage(driver)
+        exception_page.open()
+        exception_page.execute_add_button()
+        assert exception_page.is_second_row_displayed(), "Row2 is not displayed but it should be"
 
 
     def test_ElementNotInteractableException(self, driver):
@@ -69,7 +65,7 @@ class TestExceptionsScenarios:
 
         #Verify instruction text element is no longer displayed
         wait = WebDriverWait(driver, 10)
-        assert wait.until(ec.invisibility_of_element_located((By.ID, 'instructions'))), "Instrucion text element is displayed but it shouldn't"
+        assert wait.until(ec.invisibility_of_element_located((By.ID, 'instructions'))), "Instruction text element is displayed but it shouldn't"
 
 
     def test_TimeoutException(self, driver):
