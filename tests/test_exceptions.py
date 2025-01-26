@@ -69,15 +69,7 @@ class TestExceptionsScenarios:
 
 
     def test_TimeoutException(self, driver):
-        #Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
-
-        #Click Add button
-        driver.find_element(By.ID, 'add_btn').click()
-
-        #Wait for 6 seconds for the second input field to be displayed
-        wait = WebDriverWait(driver, 6)
-        row2_input_locator = wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='row2']/input")))
-
-        #Verify second input field is displayed
-        assert row2_input_locator.is_displayed(), "Row2 is not displayed but it should be"
+        exception_page = ExceptionsPage(driver)
+        exception_page.open()
+        exception_page.execute_add_button()
+        assert exception_page.is_second_row_displayed(), "Row2 is not displayed but it should be"
