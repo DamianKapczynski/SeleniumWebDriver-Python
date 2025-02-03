@@ -8,18 +8,17 @@ class TestExceptionsScenarios:
     def test_NoSuchElementException(self, driver):
         exception_page = ExceptionsPage(driver)
         exception_page.open()
-        exception_page.execute_add_button()
-        assert exception_page.is_second_row_displayed(), "Row2 is not displayed but it should be"
+        exception_page.add_second_row()
+        assert exception_page.is_row_2_displayed(), "Row2 is not displayed but it should be"
 
 
     def test_ElementNotInteractableException(self, driver):
         #Open page
         exception_page = ExceptionsPage(driver)
         exception_page.open()
-        exception_page.execute_add_button()
-        exception_page.type_text()
-        exception_page.execute_save_button()
-        assert  exception_page.validate_second_row_input()
+        exception_page.add_second_row()
+        exception_page.add_text_to_2_row()
+        assert exception_page.get_confirmation_message(), "Confirmation message is not expected"
 
 
     def test_InvalidElementStateException(self, driver):
@@ -60,5 +59,5 @@ class TestExceptionsScenarios:
     def test_TimeoutException(self, driver):
         exception_page = ExceptionsPage(driver)
         exception_page.open()
-        exception_page.execute_add_button()
-        assert exception_page.is_second_row_displayed(), "Row2 is not displayed but it should be"
+        exception_page.add_second_row()
+        assert exception_page.is_row_2_displayed(), "Row2 is not displayed but it should be"
