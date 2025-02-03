@@ -14,23 +14,12 @@ class TestExceptionsScenarios:
 
     def test_ElementNotInteractableException(self, driver):
         #Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
-
-        #Click Add button
-        add_button_locator = driver.find_element(By.ID, 'add_btn').click()
-
-        #Wait for the second row to load
-        wait = WebDriverWait(driver, 10)
-        row2_input_locator = wait.until(ec.presence_of_element_located((By.XPATH, "//div[@id='row2']/input")))
-
-        #Type text into the second input field
-        row2_input_locator.send_keys("Input text")
-
-        #Push Save button using locator By.name(“Save”)
-        driver.find_element(By.XPATH, "//div[@id='rows']/div[3]/div[@class='row']/button[@id='save_btn']").click()
-
-        #Verify text saved
-        assert row2_input_locator.get_attribute("value") == "Input text", "Wrong input"
+        exception_page = ExceptionsPage(driver)
+        exception_page.open()
+        exception_page.execute_add_button()
+        exception_page.type_text()
+        exception_page.execute_save_button()
+        assert  exception_page.validate_second_row_input()
 
 
     def test_InvalidElementStateException(self, driver):
