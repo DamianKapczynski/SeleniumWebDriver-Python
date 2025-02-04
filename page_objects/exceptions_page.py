@@ -26,7 +26,7 @@ class ExceptionsPage(BasePage):
 
     def add_second_row(self):
         super()._click(self.__add_button)
-        super()._wait_untill_element_is_visible(self.__row_2_input_element)
+        super()._wait_until_element_is_visible(self.__row_2_input_element)
 
     def is_row_2_displayed(self):
         return super()._is_displayed(self.__row_2_input_element)
@@ -37,15 +37,16 @@ class ExceptionsPage(BasePage):
     def add_text_to_1_row(self):
         super()._type(self.__row_1_input_element, self.__row_1_input_text)
         super()._click(self.__row_1_save_button)
-        super()._wait_untill_element_is_visible(self.__confirmation_element)
+        super()._wait_until_element_is_visible(self.__confirmation_element)
 
     def add_text_to_2_row(self):
         super()._type(self.__row_2_input_element, self.__row_2_input_text)
         super()._click(self.__row_2_save_button)
-        super()._wait_untill_element_is_visible(self.__confirmation_element)
+        super()._wait_until_element_is_visible(self.__confirmation_element)
 
     def clear_text_1_row(self):
         super()._click(self.__edit_button)
+        super()._wait_until_element_is_clickable(self.__row_1_input_element)
         super()._clear_text(self.__row_1_input_element)
 
     def get_confirmation_message(self):

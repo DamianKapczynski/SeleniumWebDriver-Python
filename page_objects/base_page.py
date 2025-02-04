@@ -12,23 +12,27 @@ class BasePage:
         return self._driver.find_element(*locator)
 
     def _type(self, locator: tuple, text: str, time: int = 10):
-        self._wait_untill_element_is_visible(locator, time)
+        self._wait_until_element_is_visible(locator, time)
         self._find(locator).send_keys(text)
 
     def _click(self, locator: tuple, time: int = 10):
-        self._wait_untill_element_is_visible(locator, time)
+        self._wait_until_element_is_visible(locator, time)
         self._find(locator).click()
 
-    def _wait_untill_element_is_visible(self, locator, time: int = 10):
+    def _wait_until_element_is_visible(self, locator, time: int = 10):
         wait = WebDriverWait(self._driver, time)
         wait.until(ec.presence_of_element_located(locator))
+
+    def _wait_until_element_is_clickable(self, locator, time: int = 10):
+        wait = WebDriverWait(self._driver, time)
+        wait.until(ec.element_to_be_clickable(locator))
 
     @property
     def current_url(self) -> str:
         return self._driver.current_url
 
     def _is_displayed(self, locator: tuple, time: int = 10) -> bool:
-        self._wait_untill_element_is_visible(locator, time)
+        self._wait_until_element_is_visible(locator, time)
         try:
             return self._find(locator).is_displayed()
         except NoSuchElementException:
@@ -38,9 +42,9 @@ class BasePage:
         self._driver.get(url)
 
     def _get_text(self, locator: tuple, time: int = 10) -> str:
-        self._wait_untill_element_is_visible(locator, time)
+        self._wait_until_element_is_visible(locator, time)
         return self._find(locator).text
 
     def _clear_text(self, locator: tuple, time: int = 10):
-        self._wait_untill_element_is_visible(locator, time)
+        self._wait_until_element_is_visible(locator, time)
         return self._find(locator).clear()
