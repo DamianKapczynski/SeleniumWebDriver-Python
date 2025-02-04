@@ -29,18 +29,10 @@ class TestExceptionsScenarios:
 
 
     def test_StaleElementReferenceException(self, driver):
-        #Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
-
-        #Find the instructions text element
-        instruction_text_locator = driver.find_element(By.ID, 'instructions')
-
-        #Push add button
-        driver.find_element(By.ID, 'add_btn').click()
-
-        #Verify instruction text element is no longer displayed
-        wait = WebDriverWait(driver, 10)
-        assert wait.until(ec.invisibility_of_element_located((By.ID, 'instructions'))), "Instruction text element is displayed but it shouldn't"
+        exception_page = ExceptionsPage(driver)
+        exception_page.open()
+        exception_page.execute_add_button()
+        assert not exception_page.are_instructions_displayed(), "Instruction text element is displayed but it shouldn't"
 
 
     def test_TimeoutException(self, driver):

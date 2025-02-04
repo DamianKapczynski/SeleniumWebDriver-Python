@@ -8,6 +8,7 @@ class ExceptionsPage(BasePage):
     __add_button = (By.ID, 'add_btn')
     __edit_button = (By.ID, 'edit_btn')
     __confirmation_element = (By.ID, "confirmation")
+    __instructions_element = (By.ID, 'instructions')
     __row_1_input_element = (By.XPATH, "//div[@id='row1']/input")
     __row_2_input_element = (By.XPATH, "//div[@id='row2']/input")
     __row_1_input_text = "Input 1 text"
@@ -51,3 +52,6 @@ class ExceptionsPage(BasePage):
 
     def get_confirmation_message(self):
         return super()._get_text(self.__confirmation_element)
+
+    def are_instructions_displayed(self):
+       return super()._is_displayed(self.__instructions_element)
