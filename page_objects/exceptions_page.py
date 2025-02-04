@@ -6,6 +6,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 class ExceptionsPage(BasePage):
     __url = 'https://practicetestautomation.com/practice-test-exceptions/'
     __add_button = (By.ID, 'add_btn')
+    __edit_button = (By.ID, 'edit_btn')
     __confirmation_element = (By.ID, "confirmation")
     __row_1_input_element = (By.XPATH, "//div[@id='row1']/input")
     __row_2_input_element = (By.XPATH, "//div[@id='row2']/input")
@@ -33,10 +34,19 @@ class ExceptionsPage(BasePage):
     def is_second_row_displayed(self):
         return super()._is_displayed(self.__row_2_input_element)
 
+    def add_text_to_1_row(self):
+        super()._type(self.__row_1_input_element, self.__row_1_input_text)
+        super()._click(self.__row_1_save_button)
+        super()._wait_untill_element_is_visible(self.__confirmation_element)
+
     def add_text_to_2_row(self):
         super()._type(self.__row_2_input_element, self.__row_2_input_text)
         super()._click(self.__row_2_save_button)
         super()._wait_untill_element_is_visible(self.__confirmation_element)
+
+    def clear_text_1_row(self):
+        super()._click(self.__edit_button)
+        super()._clear_text(self.__row_1_input_element)
 
     def get_confirmation_message(self):
         return super()._get_text(self.__confirmation_element)

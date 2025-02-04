@@ -13,32 +13,19 @@ class TestExceptionsScenarios:
 
 
     def test_ElementNotInteractableException(self, driver):
-        #Open page
         exception_page = ExceptionsPage(driver)
         exception_page.open()
         exception_page.add_second_row()
         exception_page.add_text_to_2_row()
-        assert exception_page.get_confirmation_message(), "Confirmation message is not expected"
+        assert exception_page.get_confirmation_message() == "Row 2 was saved", "Wrong confirmation message"
 
 
     def test_InvalidElementStateException(self, driver):
-        #Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
-
-        #Clear input field
-        driver.find_element(By.ID, 'edit_btn').click()
-        input_field_locator = driver.find_element(By.XPATH, "//div[@id='row1']/input")
-        wait = WebDriverWait(driver, 10)
-        wait.until(ec.element_to_be_clickable(input_field_locator))
-        input_field_locator.clear()
-
-        #Type text into the input field
-        input_field_locator.send_keys("New value")
-        driver.find_element(By.ID, "save_btn").click()
-
-        #Verify text changed
-        confirmation_locator = wait.until(ec.visibility_of_element_located((By.ID, "confirmation")))
-        assert confirmation_locator.text == "Row 1 was saved", "Wrong confirmation message"
+        exception_page = ExceptionsPage(driver)
+        exception_page.open()
+        exception_page.clear_text_1_row()
+        exception_page.add_text_to_1_row()
+        assert exception_page.get_confirmation_message() == "Row 1 was saved", "Wrong confirmation message"
 
 
     def test_StaleElementReferenceException(self, driver):
